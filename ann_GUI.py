@@ -111,11 +111,11 @@ class App:
 		
 		# Padding for top
 		topPad = Frame(master, height=10)
-		topPad.grid(row=0,column=0,sticky=EW)
+		topPad.grid(row=0,column=0,sticky=W)
 		
 		# Top Pane, left side is session, right is menu buttons
 		mainTP = Frame(master)
-		mainTP.grid(row=1,column=0, sticky=EW)
+		mainTP.grid(row=1,column=0, sticky=W)
 		
 		# Content for session info
 		
@@ -185,11 +185,11 @@ class App:
 		aboutB = Button(menuFrame,text="About",command=self.about_dlg)
 		helpB = Button(menuFrame,text="Help",command=self.help_dlg)
 		
-		newB.grid(row=0,column=0,padx=20,sticky=W)
-		openB.grid(row=0,column=1,padx=20)
-		saveB.grid(row=0,column=2,padx=20)
-		settingsB.grid(row=0,column=3,padx=20,sticky=W)
-		helpB.grid(row=0,column=4,padx=20)
+		newB.grid(row=0,column=0,padx=10,sticky=W)
+		openB.grid(row=0,column=1,padx=10)
+		saveB.grid(row=0,column=2,padx=10)
+		settingsB.grid(row=0,column=3,padx=10,sticky=W)
+		helpB.grid(row=0,column=4,padx=10)
 		aboutB.grid(row=0,column=5)
 		
 		midPad = Frame(master, height=10)
@@ -211,7 +211,7 @@ class App:
 		# LEFT / Top Image
 		self.topCV = Canvas(topIMG,width=imgW,height=imgH,cursor='cross')
 		self.topImg = self.get_img(self.imgPath)
-		self.topImgRef = self.topCV.create_image(int(imgW/2),int(imgH/2),image=self.topImg,anchor=CENTER,tags='topImage')		
+		self.topImgRef = self.topCV.create_image(int(imgW/2),int(imgH/3),image=self.topImg,anchor=CENTER,tags='topImage')		
 		self.topCV.pack()
 		
 		# 
@@ -222,15 +222,15 @@ class App:
 		self.bottCV = Canvas(bottomIMG,width=imgW,height=imgH,cursor='cross')
 		self.bottImg = self.get_img(self.imgPath2)
 		# Offset in image location corrects for bias towards bottom of frame in camera 2 images
-		self.bottImgRef = self.bottCV.create_image(int(imgW/2),int(imgH/2 - 50),image=self.bottImg,anchor=CENTER,tags='bottImage')
+		self.bottImgRef = self.bottCV.create_image(int(imgW/2),int(imgH/3 - 50),image=self.bottImg,anchor=CENTER,tags='bottImage')
 		# So...tkinter garbage collects your image reference even if it's still in use unless you make an extra copy of it. Go figure.		
 		self.bottCV.pack()
 
 		botPad = Frame(master,height=10)
-		botPad.grid(row=4,column=0,sticky=EW)
+		botPad.grid(row=4,column=0,sticky=W)
 		
 		mainBT = Frame(master,width=totW)
-		mainBT.grid(row=5,column=0,sticky=EW)
+		mainBT.grid(row=5,column=0,sticky=W)
 		
 		
 		controlHolder = Frame(mainBT, width=totW, height=40)
@@ -260,9 +260,9 @@ class App:
 		
 		# Frame for data table at bottom
 		dataHolder = Frame(mainBT, width=totW)
-		dataHolder.grid(row=2,column=0, sticky=EW)		
+		dataHolder.grid(row=2,column=0, sticky=W)		
 		dataFrame = Frame(dataHolder,width=(totW-20))
-		dataFrame.grid(row=0,column=0, padx=265, sticky=EW)
+		dataFrame.grid(row=0,column=0, padx=10, sticky=W)
 		
 		# Info frame at bottom. Currently empty
 		suppInfoFrame = Frame(mainBT, width=totW)
