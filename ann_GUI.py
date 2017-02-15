@@ -697,7 +697,9 @@ class App:
 		point = self.topCV.find_withtag(CURRENT)
 		if point == img:
 			return
-		self.topCV.coords(point,(event.x-5),(event.y-5),(event.x+5),(event.y+5))
+		x = self.topCV.canvasx(event.x)
+		y = self.topCV.canvasy(event.y)
+		self.topCV.coords(point,(x-5),(y-5),(x+5),(y+5))
 		
 	def move_point2(self,event):
 		# Moves a single point for camera 2
@@ -705,7 +707,9 @@ class App:
 		point = self.bottCV.find_withtag(CURRENT)
 		if point == img:
 			return
-		self.bottCV.coords(point,(event.x-5),(event.y-5),(event.x+5),(event.y+5))
+		x = self.bottCV.canvasx(event.x)
+		y = self.bottCV.canvasy(event.y)
+		self.bottCV.coords(point,(x-5),(y-5),(x+5),(y+5))
 		
 	def parse_data_for_tree(self, data):
 		# takes a dict of data values and keys for a frame and assembles a list of the data values in the correct order for insertion into the treeview
