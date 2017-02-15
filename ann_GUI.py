@@ -209,22 +209,42 @@ class App:
 		mainLR.add(topIMG)
 		
 		# LEFT / Top Image
-		self.topCV = Canvas(topIMG,width=imgW,height=imgH,cursor='cross')
+		self.topCVframe = Frame(topIMG,width=imgW,height=imgH)
+		self.topCVframe.pack()
+		self.topCV = Canvas(self.topCVframe,width=imgW,height=imgH,cursor='cross', scrollregion=(-200,-200,1000,500))
 		self.topImg = self.get_img(self.imgPath)
-		self.topImgRef = self.topCV.create_image(int(imgW/2),int(imgH/2),image=self.topImg,anchor=CENTER,tags='topImage')		
-		self.topCV.pack()
+		self.topImgRef = self.topCV.create_image(int(imgW/2),int(imgH/3),image=self.topImg,anchor=CENTER,tags='topImage')	
+		self.xscrollbar = Scrollbar(self.topCVframe, orient=HORIZONTAL)
+		self.yscrollbar = Scrollbar(self.topCVframe)
+		self.topCV.config(xscrollcommand=self.xscrollbar.set)
+		self.xscrollbar.config(command=self.topCV.xview)
+		self.topCV.config(yscrollcommand=self.yscrollbar.set)
+		self.yscrollbar.config(command=self.topCV.yview)
+		self.xscrollbar.pack(side=BOTTOM, fill=BOTH)
+		self.yscrollbar.pack(side=RIGHT, fill=BOTH)
+		self.topCV.pack(expand = YES, fill=BOTH)
 		
 		# 
 		bottomIMG = LabelFrame(mainLR,text="Camera 2",width=imgW,height=imgH)
 		mainLR.add(bottomIMG)
 		
 		# RIGHT / Bottom Image
-		self.bottCV = Canvas(bottomIMG,width=imgW,height=imgH,cursor='cross')
+		self.bottCVframe = Frame(bottomIMG,width=imgW,height=imgH)
+		self.bottCVframe.pack()
+		self.bottCV = Canvas(self.bottCVframe,width=imgW,height=imgH,cursor='cross', scrollregion=(-200,-200,1000,500))
 		self.bottImg = self.get_img(self.imgPath2)
 		# Offset in image location corrects for bias towards bottom of frame in camera 2 images
-		self.bottImgRef = self.bottCV.create_image(int(imgW/2),int(imgH/2 - 50),image=self.bottImg,anchor=CENTER,tags='bottImage')
+		self.bottImgRef = self.bottCV.create_image(int(imgW/2),int(imgH/3 - 50),image=self.bottImg,anchor=CENTER,tags='bottImage')
 		# So...tkinter garbage collects your image reference even if it's still in use unless you make an extra copy of it. Go figure.		
-		self.bottCV.pack()
+		self.xbottscrollbar = Scrollbar(self.bottCVframe, orient=HORIZONTAL)
+		self.ybottscrollbar = Scrollbar(self.bottCVframe)
+		self.bottCV.config(xscrollcommand=self.xbottscrollbar.set)
+		self.xbottscrollbar.config(command=self.bottCV.xview)
+		self.bottCV.config(yscrollcommand=self.ybottscrollbar.set)
+		self.ybottscrollbar.config(command=self.bottCV.yview)
+		self.xbottscrollbar.pack(side=BOTTOM, fill=BOTH)
+		self.ybottscrollbar.pack(side=RIGHT, fill=BOTH)
+		self.bottCV.pack(expand = YES, fill=BOTH)
 
 		botPad = Frame(master,height=10)
 		botPad.grid(row=4,column=0,sticky=EW)
@@ -677,7 +697,9 @@ class App:
 		point = self.topCV.find_withtag(CURRENT)
 		if point == img:
 			return
-		self.topCV.coords(point,(event.x-5),(event.y-5),(event.x+5),(event.y+5))
+		x = self.topCV.canvasx(event.x)
+		y = self.topCV.canvasy(event.y)
+		self.topCV.coords(point,(x-5),(y-5),(x+5),(y+5))
 		
 	def move_point2(self,event):
 		# Moves a single point for camera 2
@@ -685,7 +707,9 @@ class App:
 		point = self.bottCV.find_withtag(CURRENT)
 		if point == img:
 			return
-		self.bottCV.coords(point,(event.x-5),(event.y-5),(event.x+5),(event.y+5))
+		x = self.bottCV.canvasx(event.x)
+		y = self.bottCV.canvasy(event.y)
+		self.bottCV.coords(point,(x-5),(y-5),(x+5),(y+5))
 		
 	def parse_data_for_tree(self, data):
 		# takes a dict of data values and keys for a frame and assembles a list of the data values in the correct order for insertion into the treeview
