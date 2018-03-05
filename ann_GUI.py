@@ -12,6 +12,7 @@ import yaml
 import ConfigParser
 from PIL import Image, ImageTk
 from ttk import *
+# Old format
 #import tktable
 
 # TODO: move helper and graphics functions in to their own sections or util files
@@ -99,8 +100,7 @@ class App:
 		
 		# Default image to hold canvas for images on load
 		# Change path for different startup images
-		#self.imgPath = r"C:\\Python27\CNstuff\sampleA.jpg"
-		#self.imgPath2 = r"C:\\Python27\CNstuff\sampleB.jpg"
+		
 		self.imgPath = "sampleA.jpg"
 		self.imgPath2 = "sampleB.jpg"
 		
@@ -271,6 +271,7 @@ class App:
 		suppInfoCV.pack()
 		
 		# Data table
+		# Old version
 		#dataTable = tkTable.Table(dataFrame)
 		dataTable = self.dataTable = Treeview(dataFrame,height=5,padding=3)
 		
@@ -387,7 +388,7 @@ class App:
 		
 		
 		
-		
+	# Because every program should be able to say hi!	
 	def say_hi(self):
 		print "Hello there!"
 		
